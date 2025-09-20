@@ -1,4 +1,4 @@
-name: CI - build site
+name: Build Site
 
 on:
   push:
@@ -9,9 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BINSTALL_DISABLE_TELEMETRY: "true"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Cache pnpm store
         uses: actions/cache@v4
@@ -36,7 +38,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: 'pnpm'
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v3
@@ -44,18 +45,29 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Set up Rust toolchain
-        uses: actions-rs/toolchain@v1
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
+          targets: wasm32-unknown-unknown
+
       - name: Install cargo-binstall
-        run: cargo install cargo-binstall
+        run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
       - name: Install dioxus-cli
-        run: cargo binstall dioxus-cli
+        run: cargo binstall --no-confirm dioxus-cli
 
       - name: Build Tailwind CSS
         run: pnpx @tailwindcss/cli -i ./tailwind.css -o ./assets/GENERATED_tailwind.css
 
       - name: Bundle site
         run: dx bundle --platform web --ssg --release
+    
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+            apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+            accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+            command: >
+                pages deploy ./target/dx/dealrs-web/release/web/public
+                --project-name dealrs
+                --branch main

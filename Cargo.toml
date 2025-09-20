@@ -9,7 +9,7 @@ build = "src/build.rs"
 
 [dependencies]
 getrandom = { version = "0.3.3", features = ["wasm_js"] }
-dealrs = { path = "../dealrs" }
+dealrs = { git = "https://github.com/cadebrown/dealrs" }
 dioxus = { version = "0.6.0", features = ["fullstack"] }
 dioxus-router = "0.6.3"
 dioxus-fullstack = "0.6.3"

@@ -3,5 +3,6 @@
 		"@tailwindcss/cli": "^4.1.13",
 		"tailwindcss": "^4.1.13"
 	},
-	"type": "module"
+	"type": "module",
+    "packageManager": "pnpm@9.15.9"
 }
