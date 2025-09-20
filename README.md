@@ -27,9 +27,12 @@ Ensure `$HOME/.cargo/bin` is in your PATH so `cargo`-installed tools (like `dx`)
 
 ## Development (generate styles + hot reload)
 
-- Terminal 1: generate/watch Tailwind CSS just serve-style This runs: pnpx @tailwindcss/cli -i ./tailwind.css -o ./assets/GENERATED_tailwind.css --watch
+- Terminal 1: generate/watch Tailwind CSS:
+  `just serve-style`
 
-- Terminal 2: run Dioxus dev server (hot reload) just serve This runs: dx serve
+
+- Terminal 2: run Dioxus dev server (hot reload):
+  `just serve`
 
 Tailwind source is `tailwind.css`; generated CSS is written to `assets/GENERATED_tailwind.css`.
 
