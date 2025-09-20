@@ -1,0 +1,55 @@
+@config "./tailwind.config.ts";
+
+@source "./src/**/*.{html,js,ts,jsx,tsx,rs,css}";
+@source "./dist/**/*.html";
+
+@import "tailwindcss";
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#main {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Flippable card CSS */
+.card-wrapper {
+  perspective: 1000px;
+  display: inline-block;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 450ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* flip to back on hover */
+.card-wrapper:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}

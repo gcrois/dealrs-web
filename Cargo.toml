@@ -1,0 +1,38 @@
+[package]
+name = "dealrs-web"
+version = "0.1.0"
+authors = ["Gregory Croisdale <gtcroisdale1@gmail.com>"]
+edition = "2021"
+build = "src/build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+getrandom = { version = "0.3.3", features = ["wasm_js"] }
+dealrs = { path = "../dealrs" }
+dioxus = { version = "0.6.0", features = ["fullstack"] }
+dioxus-router = "0.6.3"
+dioxus-fullstack = "0.6.3"
+chrono = "0.4.42"
+
+[build-dependencies]
+vergen = { version = "9.0.0", features = ["build", "cargo", "rustc", "si"] }
+vergen-git2 = { version = "1.0.0", features = ["build", "cargo", "rustc", "si"] }
+
+[features]
+default = ["web"]
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+
+[profile]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"
