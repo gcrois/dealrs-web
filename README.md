@@ -2,6 +2,8 @@
 
 Minimal Dioxus + Tailwind site demonstrating the [dealrs](https://crates.io/crates/dealrs) crate.
 
+You can see it live @ [](https://dealrs.pages.dev)
+
 ## Requirements
 
 - Rust (rustup / cargo)
